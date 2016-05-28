@@ -21,8 +21,14 @@ int Right = 10;
 int Down = 11;
 
 int Start =  12;
+int Select = 13;
+int Home = 14;
 
-int held[13] = { };
+int L3 = 15;
+int R3 = 16;
+
+
+int held[17] = { };
 
 PS2Keyboard keyboard;
 
@@ -121,6 +127,22 @@ void loop() {
       held[Right] = 1;
     } else if (r == 0x374) {
       held[Right] = 0;
+    } else if (r == 0x15) {
+      held[R3] = 1;
+    } else if (r == 0x115) {
+      held[R3] = 0;
+    } else if (r == 0x2C) {
+      held[L3] = 1;
+    } else if (r == 0x12C) {
+      held[L3] = 0;
+    } else if (r == 0x43) {
+      held[Select] = 1;
+    } else if (r == 0x143) {
+      held[Select] = 0;
+    } else if (r == 0x44) {
+      held[Home] = 1;
+    } else if (r == 0x144) {
+      held[Home] = 0;
     }
     dataForController_t controllerData = getControllerData(c);
     setControllerData(controllerData); 
@@ -156,11 +178,13 @@ dataForController_t getControllerData(char c){
   controllerData.r2On = held[R2];
   controllerData.l1On = held[L1];
   controllerData.l2On = held[L2];
-
+  controllerData.r3On = held[R3];
+  controllerData.l3On = held[L3];
 
   
   controllerData.startOn = held[Start];
-  
+  controllerData.selectOn = held[Select];
+  controllerData.homeOn = held[Home];
   // And return the data!
   return controllerData;
 }
